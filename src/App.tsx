@@ -1,10 +1,9 @@
-import {WeatherCardComponent} from "./components/WeatherCardComponent.tsx";
-import {weatherData} from "./customData/CustomData.ts";
+import {WeatherCardGridView} from "./components/WeatherCardGridView.tsx";
 
 function App() {
   return (
     <>
-      <WeatherCardComponent value={weatherData}/>
+      <WeatherCardGridView/>
     </>
   )
 }
