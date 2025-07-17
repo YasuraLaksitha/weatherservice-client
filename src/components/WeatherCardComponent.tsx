@@ -38,7 +38,7 @@ export function WeatherCardComponent(weatherDetails: Readonly<WeatherCardCompone
                         </div>
                         <span className={"text-white justify-center items-center flex font-bold text-3xl md:text-4xl lg:text-5xl"}>{temp}</span>
 
-                        <span className={"text-white font-bold self-end justify-center flex text-lg pb-2 md:pb-0"}>{weatherData.weatherDescription}</span>
+                        <span className={"text-white font-bold self-end justify-center flex text-lg pb-2 md:pb-0 md:ps-3"}>{weatherData.weatherDescription}</span>
 
                         <div className={"grid justify-center grid-rows-2 self-end"}>
                             <div className={"text-white font-bold text-sm"}>{"Temp Min: " + tempMin}</div>
@@ -63,7 +63,7 @@ export function WeatherCardComponent(weatherDetails: Readonly<WeatherCardCompone
                         <div className={"flex self-end justify-center"}>
                             <RiSendPlaneLine size={30} color={"white"}/>
                         </div>
-                        <span className={"flex items-center text-sm text-white justify-center self-end"}>
+                        <span className={"flex px-3 items-center text-sm text-white justify-center self-end"}>
                             <strong>{windDetails}</strong>
                         </span>
                     </div>

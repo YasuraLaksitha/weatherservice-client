@@ -13,7 +13,7 @@ export function WeatherCardGridView() {
 
     useEffect(() => {
         dispatch(fetchWeatherData())
-    }, [dispatch,weatherData]);
+    }, [dispatch]);
 
     if (error) {
         return (
