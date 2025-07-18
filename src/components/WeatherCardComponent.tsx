@@ -1,12 +1,7 @@
 import type {WeatherData} from "../model/WeatherData.ts";
-import { RiSendPlaneLine } from "react-icons/ri";
-import {
-    formatHumidity,
-    formatPressure,
-    formatTemperature,
-    formatVisibility,
-    formatWindDetails
-} from "../utils/DataFormatter.ts";
+import {RiSendPlaneLine} from "react-icons/ri";
+import {formatedData} from "../utils/DataFormatter.ts";
+import {type NavigateFunction, useNavigate} from "react-router-dom";
 
 type WeatherCardComponentProps = {
     value: WeatherData;
@@ -14,31 +9,40 @@ type WeatherCardComponentProps = {
 
 export function WeatherCardComponent(weatherDetails: Readonly<WeatherCardComponentProps>) {
     const weatherData: WeatherData = weatherDetails.value;
+    const {countryName,temp, tempMax, tempMin, pressure, humidity, visibility, windDetails} = formatedData(weatherData);
 
-    const temp: string = formatTemperature(weatherData.temp);
-    const tempMax: string = formatTemperature(weatherData.tempMax);
-    const tempMin: string = formatTemperature(weatherData.tempMin);
-    const pressure: string = formatPressure(weatherData.pressure);
-    const humidity: string = formatHumidity(weatherData.humidity);
-    const visibility: string = formatVisibility(weatherData.visibility);
-    const windDetails: string = formatWindDetails(weatherData.windSpeed, weatherData.windDegree);
+    const navigate: NavigateFunction = useNavigate();
 
     return (
         <div className={"p-3"}>
             <div className={" sm:max-w-xl shadow-xl overflow-hidden transition-shadow duration-300"}>
-                <div className={"overflow-hidden h-52 rounded-t-lg relative " +
-                    "bg-[url('https://placehold.co/600x400')] bg-cover bg-center hover:scale-105 " +
-                    "transition-transform duration-300 cursor-pointer flex items-center justify-center px-1"}>
+                <div onClick={() => navigate(`/${weatherData.cityName}/view`)}
+                     className={"overflow-hidden h-52 rounded-t-lg relative " +
+                         "bg-[url('https://placehold.co/600x400')] bg-cover bg-center hover:scale-105 " +
+                         "transition-transform duration-300 cursor-pointer flex items-center justify-center px-1"}>
 
                     <div className={"grid sm:grid-cols-2 grid-rows-2 gap-x-20"}>
                         <div className={"grid grid-rows-2"}>
-                            <span className={"text-white justify-center flex font-bold text-xl lg:text-2xl"}>{weatherData.cityName}</span>
-                            <span
-                                className={"text-white font-semibold text-md justify-center flex"}>{"9.9Am,Feb 8"}</span>
+                            <span className={"text-white justify-center flex font-bold text-xl lg:text-2xl"}>
+                                {countryName}
+                            </span>
+                            <span className={"text-white font-semibold text-md justify-center flex"}>
+                                {"9.9Am,Feb 8"}
+                            </span>
                         </div>
-                        <span className={"text-white justify-center items-center flex font-bold text-3xl md:text-4xl lg:text-5xl"}>{temp}</span>
+                        <span className={"text-white justify-center items-center flex font-bold text-3xl md:text-4xl lg:text-5xl"}>
+                            {temp}
+                        </span>
 
-                        <span className={"text-white font-bold self-end justify-center flex text-lg pb-2 md:pb-0 md:ps-3"}>{weatherData.weatherDescription}</span>
+                        <div className="text-white flex items-center gap-2 self-center font-bold justify-center text-lg pb-2 md:pb-0 md:ps-3">
+                            <img
+                                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                                alt={weatherData.icon}
+                                width={50}
+                                height={50}
+                            />
+                            <span>{weatherData.weatherDescription}</span>
+                        </div>
 
                         <div className={"grid justify-center grid-rows-2 self-end"}>
                             <div className={"text-white font-bold text-sm"}>{"Temp Min: " + tempMin}</div>
