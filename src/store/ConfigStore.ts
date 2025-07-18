@@ -3,7 +3,7 @@ import weatherDataReducer from "../store/WeatherDataSlice.ts"
 
 export const Store = configureStore({
     reducer: {
-        weatherData: weatherDataReducer
+        weather: weatherDataReducer
     }
 });
 

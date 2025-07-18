@@ -1,11 +1,11 @@
-import {WeatherCardGridView} from "./components/WeatherCardGridView.tsx";
+import {Outlet} from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <WeatherCardGridView/>
-    </>
-  )
+    return (
+        <>
+            <Outlet/>
+        </>
+    )
 }
 
 export default App

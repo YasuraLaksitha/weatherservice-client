@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {fetchWeatherData} from "../api/WeatherDataAPIs.ts";
 
 type WeatherDataStateProps = {
-    weatherData?: [WeatherData],
+    weatherData?: WeatherData[],
     isLoading?: boolean,
     error?: string,
     message?: string

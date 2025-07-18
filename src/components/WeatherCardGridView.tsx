@@ -8,7 +8,7 @@ import {useEffect} from "react";
 import {fetchWeatherData} from "../api/WeatherDataAPIs.ts";
 
 export function WeatherCardGridView() {
-    const {isLoading, error,weatherData} = useAppSelector((state: RootState) => state.weatherData);
+    const {isLoading, error,weatherData} = useAppSelector((state: RootState) => state.weather);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export function WeatherCardGridView() {
 
     if (error) {
         return (
-            <div className='flex justify-center items-center h-[200px] mt-4'>
+            <div className='flex  justify-center items-center h-[200px] mt-4'>
                 <FaExclamationTriangle className='text-slate-800 text-3xl mr-2'/>
                 <span className='text-slate-800 font-medium text-lg'>
                     {error}
@@ -32,7 +32,7 @@ export function WeatherCardGridView() {
                 <div className='flex justify-center items-center h-[200px] mt-4'>
                     <LoaderComponent/>
                 </div> :
-                <div className="flex justify-center">
+                <div className="flex justify-center bg-gray-900">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {weatherData?.map((data: WeatherData, index: number) => (
                             <WeatherCardComponent key={index} value={data}/>

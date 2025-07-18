@@ -1,5 +1,7 @@
 export interface WeatherData {
     cityName: string;
+    country: string;
+    icon: string;
     weatherDescription: string;
     temp: number;
     tempMax: number;

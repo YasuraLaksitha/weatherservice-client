@@ -1,10 +1,24 @@
-export const formatTemperature = (temp:number):string => `${temp}°C`;
+import type {WeatherData} from "../model/WeatherData.ts";
 
-export const formatHumidity = (humidity:number) => `${humidity}%`;
+const formatCityName = (cityName: string, countryName: string) => `${cityName},${countryName}`
 
-export const formatVisibility = (visibility:number) => `${visibility}km`;
+const formatTemperature = (temp: number): string => `${temp}°C`;
 
-export const formatWindDetails = (windSpeed:number, degree:number) => `${windSpeed}m/s ${degree} Degree`;
+const formatHumidity = (humidity: number) => `${humidity}%`;
 
-export const formatPressure = (pressure:number) => `${pressure}hPa`;
+const formatVisibility = (visibility: number) => `${visibility}km`;
 
+const formatWindDetails = (windSpeed: number, degree: number) => `${windSpeed}m/s ${degree} Degree`;
+
+const formatPressure = (pressure: number) => `${pressure}hPa`;
+
+export const formatedData = (data: WeatherData) => ({
+    countryName:formatCityName(data.cityName,data.country),
+    temp: formatTemperature(data.temp),
+    tempMax: formatTemperature(data.tempMax),
+    tempMin: formatTemperature(data.tempMin),
+    pressure: formatPressure(data.pressure),
+    humidity: formatHumidity(data.humidity),
+    visibility: formatVisibility(data.visibility),
+    windDetails: formatWindDetails(data.windSpeed, data.windDegree)
+})
