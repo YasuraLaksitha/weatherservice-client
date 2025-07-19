@@ -36,12 +36,18 @@ export function WeatherCardGridView() {
     }
 
     return (
-        <div>
+        <div className={"bg-gray-900"}>
+            <div className={"flex flex-row gap-x-3 justify-center  py-10"}>
+                <img src="/weather.png" alt="" width={45}/>
+                <span className={"text-gray-300 text-3xl font-bold"}>
+                    {"Weather App"}
+                </span>
+            </div>
             {(isLoading ?
                 <div className='flex justify-center items-center h-[200px] mt-4'>
                     <LoaderComponent/>
                 </div> :
-                <div className="flex justify-center bg-gray-900">
+                <div className="flex justify-center">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {weatherData?.map((data: WeatherData, index: number) => (
                             <WeatherCardComponent key={index} value={data}/>
