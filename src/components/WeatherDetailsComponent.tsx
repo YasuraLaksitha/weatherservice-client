@@ -8,6 +8,7 @@ import {useEffect} from "react";
 import {fetchWeatherData} from "../api/WeatherDataAPIs.ts";
 import {LoaderComponent} from "./LoaderComponent.tsx";
 import {RiSendPlaneLine} from "react-icons/ri";
+import {useAuth0} from "@auth0/auth0-react";
 
 type WeatherDetailsComponentParamProps = {
     cityName: string
@@ -17,10 +18,18 @@ export function WeatherDetailsComponent() {
     const {cityName} = useParams<WeatherDetailsComponentParamProps>();
     const {isLoading, error, weatherData} = useAppSelector((state: RootState) => state.weather);
     const dispatch = useAppDispatch();
+    const {getAccessTokenSilently} = useAuth0();
 
     useEffect(() => {
-        dispatch(fetchWeatherData());
-    }, [dispatch]);
+        const loadData = async () => {
+            const token: string = await getAccessTokenSilently();
+            dispatch(fetchWeatherData(token));
+        }
+        loadData()
+            .catch((err) => {
+                console.error("Error in loadData:", err);
+            });
+    }, [dispatch, getAccessTokenSilently]);
 
     const details = weatherData?.find((d: WeatherData) => d.cityName === cityName);
 
@@ -43,7 +52,7 @@ export function WeatherDetailsComponent() {
         )
     }
 
-    const {countryName,temp, tempMax, tempMin, pressure, humidity, visibility, windDetails} = formatedData(details);
+    const {countryName, temp, tempMax, tempMin, pressure, humidity, visibility, windDetails} = formatedData(details);
 
     return isLoading ? (
         <div className='flex justify-center items-center h-[200px] mt-4'>
@@ -69,7 +78,8 @@ export function WeatherDetailsComponent() {
                         <div className={"grid grid-cols-2 gap-x-10 sm:px-10"}>
                             <div className={"flex flex-col justify-center border-r border-white"}>
                                 <div>
-                                    <img src={`https://openweathermap.org/img/wn/${details.icon}@2x.png`} alt={details.icon}/>
+                                    <img src={`https://openweathermap.org/img/wn/${details.icon}@2x.png`}
+                                         alt={details.icon}/>
                                 </div>
                                 <span className={"text-white font-bold flex text-lg"}>
                                     {details.weatherDescription}
@@ -77,7 +87,8 @@ export function WeatherDetailsComponent() {
                             </div>
 
                             <div className={"grid grid-rows-2 gap-y-3"}>
-                                <span className={"text-white justify-center items-center flex font-bold text-3xl md:text-4xl lg:text-5xl"}>
+                                <span
+                                    className={"text-white justify-center items-center flex font-bold text-3xl md:text-4xl lg:text-5xl"}>
                                     {temp}
                                 </span>
                                 <div className={"grid justify-center grid-rows-2 self-end"}>

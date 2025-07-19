@@ -4,12 +4,37 @@ import type {AxiosResponse} from "axios";
 
 export const fetchWeatherData = createAsyncThunk(
     "FETCH_WEATHER_DATA",
-    async(_,thunkAPI)=> {
+    async (token: string, thunkAPI) => {
         try {
-           const response: AxiosResponse = await weatherDataBaseURL.get("/fetch-all");
-           return response.data;
-        }catch (error: any){
+            const response: AxiosResponse = await weatherDataBaseURL.get("/fetch-all", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            return response.data;
+        } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response?.data?.message ?? "Something went wrong");
         }
     }
 )
+
+weatherDataBaseURL.interceptors.request.use(
+    config => {
+        console.log('Request: ', config.method?.toUpperCase(), config.url);
+        console.log('Headers: ', config.headers);
+        if (config.data) console.log('Body:', config.data);
+
+        return config;
+    }
+)
+
+weatherDataBaseURL.interceptors.response.use(
+    response => {
+        console.log('Request: ', response.status, response.config.url);
+        console.log('Data: ', response.data);
+
+        return response;
+    }
+)
+
