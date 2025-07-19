@@ -5,15 +5,24 @@ import type {RootState} from "../store/ConfigStore.ts";
 import {FaExclamationTriangle} from "react-icons/fa";
 import {LoaderComponent} from "./LoaderComponent.tsx";
 import {useEffect} from "react";
+import {useAuth0} from "@auth0/auth0-react";
 import {fetchWeatherData} from "../api/WeatherDataAPIs.ts";
 
 export function WeatherCardGridView() {
-    const {isLoading, error,weatherData} = useAppSelector((state: RootState) => state.weather);
+    const {getAccessTokenSilently} = useAuth0();
+    const {isLoading, error, weatherData} = useAppSelector((state: RootState) => state.weather);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchWeatherData())
-    }, [dispatch]);
+        const loadData = async () => {
+            const token: string = await getAccessTokenSilently();
+            dispatch(fetchWeatherData(token));
+        }
+        loadData()
+            .catch((err) => {
+                console.error("Error in loadData:", err);
+            });
+    }, [dispatch, getAccessTokenSilently]);
 
     if (error) {
         return (
