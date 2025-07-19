@@ -6,7 +6,7 @@ export const fetchWeatherData = createAsyncThunk(
     "FETCH_WEATHER_DATA",
     async (token: string, thunkAPI) => {
         try {
-            const response: AxiosResponse = await weatherDataBaseURL.get("/fetch-all", {
+            const response: AxiosResponse = await weatherDataBaseURL.get("/user/fetch-all", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
