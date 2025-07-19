@@ -14,7 +14,6 @@ createRoot(document.getElementById('root')!).render(
         authorizationParams={{
             redirect_uri: window.location.origin + '/auth/callback',
             audience: "https://skycast-api",
-            scope: "readWeatherData"
         }}
         cacheLocation={'localstorage'}
     >
