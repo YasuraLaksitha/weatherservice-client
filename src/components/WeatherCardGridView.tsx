@@ -7,6 +7,7 @@ import {LoaderComponent} from "./LoaderComponent.tsx";
 import {useEffect} from "react";
 import {useAuth0} from "@auth0/auth0-react";
 import {fetchWeatherData} from "../api/WeatherDataAPIs.ts";
+import {WeatherTitleComponent} from "./WeatherTitleComponent.tsx";
 
 export function WeatherCardGridView() {
     const {getAccessTokenSilently} = useAuth0();
@@ -37,12 +38,9 @@ export function WeatherCardGridView() {
 
     return (
         <div className={"theme-dark-bg "}>
-            <div className={"relative z-10 flex flex-row gap-x-3 justify-center  py-10"}>
-                <img src="/weather.png" alt="" width={45}/>
-                <span className={"text-gray-300 text-3xl font-bold"}>
-                    {"Weather App"}
-                </span>
-            </div>
+
+            <WeatherTitleComponent/>
+
             {(isLoading ?
                 <div className='relative z-10 flex justify-center items-center min-h-screen mt-4'>
                     <LoaderComponent/>
