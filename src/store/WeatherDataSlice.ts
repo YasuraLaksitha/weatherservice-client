@@ -25,11 +25,11 @@ const weatherDataSlice = createSlice({
             .addCase(fetchWeatherData.pending, state => {
                 state.isLoading = true;
             })
-            .addCase(fetchWeatherData.rejected, (state,action) => {
+            .addCase(fetchWeatherData.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error.message
+                state.error = action.payload as string;
             })
-            .addCase(fetchWeatherData.fulfilled, (state,action) => {
+            .addCase(fetchWeatherData.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.weatherData = action.payload.weatherApiResponseList
             })

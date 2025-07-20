@@ -31,8 +31,9 @@ weatherDataBaseURL.interceptors.request.use(
 
 weatherDataBaseURL.interceptors.response.use(
     response => {
-        console.log('Request: ', response.status, response.config.url);
-        console.log('Data: ', response.data);
+        console.log('Response: ', response.status, response.config.url);
+        console.log('Response Correlation ID: ', response.headers['x-correlation-id'])
+        console.log('Response Data: ', response.data);
 
         return response;
     }

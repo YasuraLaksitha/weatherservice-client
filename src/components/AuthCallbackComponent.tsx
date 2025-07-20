@@ -11,7 +11,7 @@ export function AuthCallbackComponent() {
         async function processRedirect() {
             try {
                 await handleRedirectCallback();
-                navigate("/", {replace: true})
+                navigate("/", {replace: true});
             } catch (e) {
                 console.error('Error handling redirect callback:', e);
             }

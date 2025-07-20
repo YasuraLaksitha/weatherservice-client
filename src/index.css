@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+.theme-dark-bg {
+    @apply relative overflow-hidden bg-[url('/paper_clouds.jpg')] bg-cover bg-no-repeat overflow-hidden bg-center;
+}
+
+.theme-dark-bg::before {
+    content: "";
+    @apply absolute inset-0 bg-gray-900 opacity-80 z-0;
+}
+

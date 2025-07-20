@@ -1,14 +1,15 @@
-import {formatedData} from "../utils/DataFormatter.ts";
+import {formatedData, getDate} from "../utils/DataFormatter.ts";
 import {FaExclamationTriangle} from "react-icons/fa";
 import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../store/Hooks.ts";
 import type {RootState} from "../store/ConfigStore.ts";
 import type {WeatherData} from "../model/WeatherData.ts";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {fetchWeatherData} from "../api/WeatherDataAPIs.ts";
 import {LoaderComponent} from "./LoaderComponent.tsx";
 import {RiSendPlaneLine} from "react-icons/ri";
 import {useAuth0} from "@auth0/auth0-react";
+import {pickRandomColor} from "../utils/ColorPicker.ts";
 
 type WeatherDetailsComponentParamProps = {
     cityName: string
@@ -16,9 +17,12 @@ type WeatherDetailsComponentParamProps = {
 
 export function WeatherDetailsComponent() {
     const {cityName} = useParams<WeatherDetailsComponentParamProps>();
+    const [bgColor, setBgColor] = useState<string|undefined>('');
     const {isLoading, error, weatherData} = useAppSelector((state: RootState) => state.weather);
     const dispatch = useAppDispatch();
     const {getAccessTokenSilently} = useAuth0();
+
+    const date:string = getDate();
 
     useEffect(() => {
         const loadData = async () => {
@@ -29,7 +33,10 @@ export function WeatherDetailsComponent() {
             .catch((err) => {
                 console.error("Error in loadData:", err);
             });
-    }, [dispatch, getAccessTokenSilently]);
+
+        setBgColor(pickRandomColor(cityName!));
+
+    }, [dispatch, getAccessTokenSilently,cityName]);
 
     const details = weatherData?.find((d: WeatherData) => d.cityName === cityName);
 
@@ -43,7 +50,7 @@ export function WeatherDetailsComponent() {
 
     if (error) {
         return (
-            <div className='flex  justify-center items-center h-[200px] mt-4'>
+            <div className='flex justify-center items-center h-[200px] mt-4'>
                 <FaExclamationTriangle className='text-slate-800 text-3xl mr-2'/>
                 <span className='text-slate-800 font-medium text-lg'>
                     {error}
@@ -59,26 +66,27 @@ export function WeatherDetailsComponent() {
             <LoaderComponent/>
         </div>
     ) : (
-        <div className={"bg-gray-900 min-h-screen"}>
-            <div className={"flex flex-row gap-x-3 justify-center py-10"}>
+        <div className={"theme-dark-bg min-h-screen "}>
+            <div className={"relative z-10 flex flex-row gap-x-3 justify-center py-10"}>
                 <img src="/weather.png" alt="" width={45}/>
                 <span className={"text-gray-300 text-3xl font-bold"}>
                     {"Weather App"}
                 </span>
             </div>
-            <div className={"flex items-center justify-center  px-4"}>
-                <div className={"w-full max-w-4xl shadow-xl overflow-hidden"}>
-                    <div className={"overflow-hidden h-72 rounded-t-lg relative " +
-                        "bg-[url('https://placehold.co/600x400')] bg-cover bg-center flex items-center justify-center px-1 " +
-                        "transition-transform duration-300 hover:scale-105"}>
 
-                        <div className={"grid grid-rows-2 gap-x-20"}>
+            <div className={"relative z-10 flex items-center justify-center  px-4"}>
+                <div className={"w-full max-w-4xl shadow-xl rounded-t-lg overflow-hidden"}>
+                    <div className={`relative overflow-hidden h-72 rounded-t-lg ${bgColor} bg-cover bg-center flex items-center justify-center px-1 transition-transform duration-300 hover:scale-105`}>
+
+                        <div className={'absolute inset-0 bg-[url(/paper_clouds.jpg)] bg-cover bg-center opacity-40 z-0'}/>
+
+                        <div className={"relative grid grid-rows-2 gap-x-20"}>
                             <div className={"flex flex-col py-3"}>
                             <span className={"text-white justify-center flex font-bold text-xl lg:text-2xl"}>
                                 {countryName}
                             </span>
                                 <span className={"text-white font-semibold text-md justify-center flex"}>
-                                {"9.9AM, Feb 8"}
+                                {date}
                             </span>
                             </div>
 
@@ -88,7 +96,7 @@ export function WeatherDetailsComponent() {
                                         <img src={`https://openweathermap.org/img/wn/${details.icon}@2x.png`}
                                              alt={details.icon}/>
                                     </div>
-                                    <span className={"text-white font-bold flex text-lg"}>
+                                    <span className={"text-white font-bold flex text-lg pe-3 "}>
                                     {details.weatherDescription}
                                 </span>
                                 </div>
@@ -107,14 +115,14 @@ export function WeatherDetailsComponent() {
                         </div>
                     </div>
 
-                    <div className={"grid grid-cols-2 lg:grid-cols-3 bg-slate-600 grid-rows-1 py-5 px-5 rounded-b-lg"}>
+                    <div className={"relative grid grid-cols-3 bg-slate-600 grid-rows-1 py-5 px-5 rounded-b-lg"}>
                         <div
                             className={"grid grid-rows-3 justify-center gap-y-2 border-r border-white/20 lg:border-none"}>
                             <span className={"text-sm text-white"}><strong>Pressure:</strong> {pressure}</span>
                             <span className={"text-sm text-white"}><strong>Humidity:</strong> {humidity}</span>
                             <span className={"text-sm text-white"}><strong>Visibility:</strong> {visibility}</span>
                         </div>
-                        <div className={"hidden lg:grid grid-rows-2 border-x border-white/20"}>
+                        <div className={" lg:grid grid-rows-2 border-x border-white/20"}>
                             <div className={"flex self-end justify-center"}>
                                 <RiSendPlaneLine size={30} color={"white"}/>
                             </div>
