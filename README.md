@@ -1,69 +1,48 @@
-# React + TypeScript + Vite
+# 🌤️ SkyCast—Weather Forecast App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SkyCast is a sleek and responsive weather forecast web application built with **React**, **TypeScript**, and **Tailwind CSS**. It fetches real-time weather data via a secure API with **Auth0 authentication** and displays it with a clean modular layout.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- Fetch all weather data
+- Dynamic background with random color picker
+- Auth0-based login with MFA & token-secured API calls
+- Detailed weather states: temperature, pressure, humidity, wind details, sunrise/sunset
+- Responsive and animated UI with React and Tailwind
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- React + TypeScript
+- Redux Toolkit
+- Tailwind CSS
+- Auth0
+- Vite
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Setup & Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Clone the repo
+git clone https://github.com/YasuraLaksitha/weatherservice-client.git
+cd weatherservice-client
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env
+# Fill in the necessary values:
+# VITE_SERVER_URL='http://localhost:8081/api'
+
+# Start the app
+npm run dev
+
+### 📡 Backend Service
+The API used by this frontend is available here:  
+👉 [WeatherService API Repo](https://github.com/YasuraLaksitha/weatherservice.git)
+
